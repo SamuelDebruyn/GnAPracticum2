@@ -61,23 +61,34 @@ public class Board
 	{
 		ArrayList<Board> neighborList = new ArrayList<Board>();
 		int[] emptyIndexes = this.getEmpty();
+		int[][] current = this.getTiles();
 		
-		//left upper corner
+		try{
+			
+			
+			
+		}
+		
+		/*//left upper corner
 		if(emptyIndexes[0] == 0 && emptyIndexes[1] == 0){
+			
 			
 		//right upper corner
 		}else if(emptyIndexes[0] == 0 && emptyIndexes[1] == this.getWidth() - 1){
 			
+			
 		//left bottom corner
 		}else if(emptyIndexes[1] == 0 && emptyIndexes[0] == this.getHeight() - 1){
+			
 			
 		//right bottom corner
 		}else if(emptyIndexes[1] == this.getWidth() - 1 && emptyIndexes[0] == this.getHeight() - 1){
 			
+			
 		//not a corner
 		}else{
 			
-		}
+		}*/
 		
 		return neighborList;
 		
