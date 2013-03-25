@@ -70,7 +70,34 @@ public class Board
 	// return sum of Manhattan distances between blocks and goal
 	public int manhattan()
 	{
-		return 0;
+		int manhattanSum = 0;
+		
+		return manhattanSum;
+	}
+	
+	// return indexes of the position where this number should be in the board
+	private int[] getDestination(int number){
+		int[] result = new int[2];
+		
+		if(number == 0){
+			result[0] = this.getHeight() - 1;
+			result[1] = this.getWidth() - 1;
+			return result;
+		}
+		
+		int checker = 1;
+		for(int i = 0; i < this.getHeight(); i++){
+			for(int j = 0; j < this.getWidth(); i++){
+				if(checker == number){
+					result[0] = i;
+					result[1] = j;
+					return result;
+				}
+				checker++;
+			}
+		}
+		
+		return result;
 	}
 	
 	// does this board position equal y
