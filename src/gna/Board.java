@@ -1,5 +1,7 @@
 package gna;
 
+import java.util.Iterator;
+
 public class Board
 {
 	
@@ -36,7 +38,15 @@ public class Board
 	// return an Iterable of all neighboring board positions
 	public Iterable<Board> neighbors()
 	{
-		return null;
+		return new Iterable<Board>(){
+
+			@Override
+			public Iterator<Board> iterator() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+		};
 	}
 	
 	// return a string representation of the board
