@@ -72,6 +72,14 @@ public class Board
 	{
 		int manhattanSum = 0;
 		
+		for(int i = 0; i < this.getHeight(); i++){
+			for(int j = 0; j < this.getWidth(); j++){
+				int[] destination = this.getDestination(this.getTile(i, j));
+				int distance = Math.abs(destination[0] - i) + Math.abs(destination[1] - j);
+				manhattanSum += distance;
+			}
+		}
+		
 		return manhattanSum;
 	}
 	
