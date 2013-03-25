@@ -49,7 +49,22 @@ public class Board
 	// return number of blocks out of place
 	public int hamming()
 	{
-		return 0;
+		int outOfPlace = 0;
+		int shouldBe = 1;
+		for(int i = 0; i < this.getHeight(); i++){
+			for(int j = 0; j < this.getWidth(); j++){
+				// last one, should be zero
+				if(i == this.getHeight() - 1 && j == this.getWidth() - 1){
+					if(this.getTile(i, j) != 0)
+						outOfPlace++;
+				}else{
+					if(this.getTile(i, j) != shouldBe)
+						outOfPlace++;
+					shouldBe++;
+				}
+			}
+		}
+		return outOfPlace;
 	}
 	
 	// return sum of Manhattan distances between blocks and goal
