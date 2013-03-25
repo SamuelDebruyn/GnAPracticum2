@@ -37,7 +37,15 @@ public class Board
 		int[][] tiles = this.getTiles();
 		return tiles[i][j];
 	}
-
+	
+	// return the representation of a tile as a string (possible ArrayIndexOutOfBoundsException)
+	private String getTileString(int i, int j){
+		int tile = this.getTile(i, j);
+		if(tile == 0)
+			return " ";
+		return Integer.toString(tile);
+	}
+	
 	// return number of blocks out of place
 	public int hamming()
 	{
@@ -121,11 +129,22 @@ public class Board
 	// return a string representation of the board
 	public String toString()
 	{
-		return "<empty>";
+		String result = "";
+		for(int i = 0; i < this.getHeight() - 1; i++){
+			for(int j = 0; j < this.getWidth() - 1; j++){
+				result += this.getTileString(i, j) + " ";
+			}
+			result += this.getTileString(i, this.getWidth() - 1) + "\n";
+		}
+		for(int j = 0; j < this.getWidth() - 1; j++){
+			result += this.getTileString(this.getHeight() - 1, j) + " ";
+		}
+		result += this.getTileString(this.getHeight() - 1, this.getWidth() - 1);
+		return result;
 	}
 	
 	// return the indexes with the empty position
-	public int[] getEmpty(){
+	private int[] getEmpty(){
 		int[] result = new int[2];
 		result[0] = 0;
 		result[1] = 0;
