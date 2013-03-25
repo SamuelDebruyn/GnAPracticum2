@@ -53,7 +53,22 @@ public class Board
 	// does this board position equal y
 	public boolean equals(Object y)
 	{
-		return false;
+		// we can't use the methods defined in this class if it's not a board
+		Board toCompare = (Board) y;
+		
+		// first check if it has the same dimensions
+		if(this.getHeight() != toCompare.getHeight() || this.getWidth() != toCompare.getWidth())
+			return false;
+		
+		// now compare every tile
+		for(int i = 0; i < this.getHeight(); i++){
+			for(int j = 0; j < this.getWidth(); j++){
+				if(this.getTile(i, j) != toCompare.getTile(i, j))
+					return false;
+			}
+		}
+		
+		return true;
 	}
 	
 	// return an Iterable of all neighboring board positions
@@ -98,27 +113,6 @@ public class Board
 				// the empty position is in a corner or on one of the 4 sides
 			}
 		}
-		
-		/*//left upper corner
-		if(emptyIndexes[0] == 0 && emptyIndexes[1] == 0){
-			
-			
-		//right upper corner
-		}else if(emptyIndexes[0] == 0 && emptyIndexes[1] == this.getWidth() - 1){
-			
-			
-		//left bottom corner
-		}else if(emptyIndexes[1] == 0 && emptyIndexes[0] == this.getHeight() - 1){
-			
-			
-		//right bottom corner
-		}else if(emptyIndexes[1] == this.getWidth() - 1 && emptyIndexes[0] == this.getHeight() - 1){
-			
-			
-		//not a corner
-		}else{
-			
-		}*/
 		
 		return neighborList;
 		
