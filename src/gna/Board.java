@@ -8,6 +8,7 @@ public class Board
 	private final int[][] tiles;
 	private final int height;
 	private final int width;
+	private Board previous;
 
 	// construct a board from an N-by-N array of tiles
 	public Board( int[][] tiles )
@@ -15,6 +16,16 @@ public class Board
 		this.tiles = tiles;
 		this.width = tiles.length;
 		this.height = tiles[0].length;
+	}
+
+	// get the previous board configuration
+	public Board getPrevious() {
+		return previous;
+	}
+
+	// set the previous board configuration
+	public void setPrevious(Board previous) {
+		this.previous = previous;
 	}
 
 	// returns the array with the tiles
@@ -89,12 +100,6 @@ public class Board
 	// return indexes of the position where this number should be in the board
 	private int[] getDestination(int number){
 		int[] result = new int[2];
-
-		if(number == 0){
-			result[0] = this.getHeight() - 1;
-			result[1] = this.getWidth() - 1;
-			return result;
-		}
 
 		int checker = 1;
 		for(int i = 0; i < this.getHeight(); i++){
