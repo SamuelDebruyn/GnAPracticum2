@@ -194,8 +194,8 @@ public class Board
 		int[] result = new int[2];
 		result[0] = 0;
 		result[1] = 0;
-		for(int i=0; i<this.getSize(); i++){
-			for(int j=0; j<this.getSize(); i++){
+		for(int i = 0; i < this.getSize(); i++){
+			for(int j = 0; j < this.getSize(); j++){
 				if(this.getTile(i, j) == 0){
 					result[0] = i;
 					result[1] = j;
