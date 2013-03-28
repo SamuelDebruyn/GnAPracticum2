@@ -6,16 +6,14 @@ public class Board
 {
 
 	private final int[][] tiles;
-	private final int height;
-	private final int width;
+	private final int size;
 	private Board previous;
 
 	// construct a board from an N-by-N array of tiles
 	public Board( int[][] tiles )
 	{
 		this.tiles = tiles;
-		this.width = tiles.length;
-		this.height = tiles[0].length;
+		this.size = tiles.length;
 	}
 
 	// get the previous board configuration
@@ -33,14 +31,9 @@ public class Board
 		return tiles;
 	}
 
-	// returns the height
-	public int getHeight() {
-		return height;
-	}
-
-	// returns the width
-	public int getWidth() {
-		return width;
+	// returns the size
+	public int getSize() {
+		return size;
 	}
 
 	// return the tile with the given indexes (possible ArrayIndexOutOfBoundsException)
@@ -62,18 +55,13 @@ public class Board
 	{
 		int outOfPlace = 0;
 		int shouldBe = 1;
-		for(int i = 0; i < this.getHeight(); i++){
-			for(int j = 0; j < this.getWidth(); j++){
-				// last one, should be zero
-				if(i == this.getHeight() - 1 && j == this.getWidth() - 1){
-					if(this.getTile(i, j) != 0)
-						outOfPlace++;
-				}else{
-					int tile = this.getTile(i, j);
-					if(tile != shouldBe && tile != 0)
-						outOfPlace++;
-					shouldBe++;
-				}
+		for(int i = 0; i < this.getSize(); i++){
+			for(int j = 0; j < this.getSize(); j++){
+				// last tile should be empty tile
+				int tile = this.getTile(i, j);
+				if(tile != shouldBe && tile != 0)
+					outOfPlace++;
+				shouldBe++;
 			}
 		}
 		return outOfPlace;
@@ -84,8 +72,8 @@ public class Board
 	{
 		int manhattanSum = 0;
 
-		for(int i = 0; i < this.getHeight(); i++){
-			for(int j = 0; j < this.getWidth(); j++){
+		for(int i = 0; i < this.getSize(); i++){
+			for(int j = 0; j < this.getSize(); j++){
 				if(this.getTile(i, j) != 0){
 					int[] destination = this.getDestination(this.getTile(i, j));
 					int distance = Math.abs(destination[0] - i) + Math.abs(destination[1] - j);
@@ -102,8 +90,8 @@ public class Board
 		int[] result = new int[2];
 
 		int checker = 1;
-		for(int i = 0; i < this.getHeight(); i++){
-			for(int j = 0; j < this.getWidth(); i++){
+		for(int i = 0; i < this.getSize(); i++){
+			for(int j = 0; j < this.getSize(); i++){
 				if(checker == number){
 					result[0] = i;
 					result[1] = j;
@@ -123,12 +111,12 @@ public class Board
 		Board toCompare = (Board) y;
 
 		// first check if it has the same dimensions
-		if(this.getHeight() != toCompare.getHeight() || this.getWidth() != toCompare.getWidth())
+		if(this.getSize() != toCompare.getSize())
 			return false;
 
 		// now compare every tile
-		for(int i = 0; i < this.getHeight(); i++){
-			for(int j = 0; j < this.getWidth(); j++){
+		for(int i = 0; i < this.getSize(); i++){
+			for(int j = 0; j < this.getSize(); j++){
 				if(this.getTile(i, j) != toCompare.getTile(i, j))
 					return false;
 			}
@@ -188,26 +176,26 @@ public class Board
 	public String toString()
 	{
 		String result = "";
-		for(int i = 0; i < this.getHeight() - 1; i++){
-			for(int j = 0; j < this.getWidth() - 1; j++){
+		for(int i = 0; i < this.getSize() - 1; i++){
+			for(int j = 0; j < this.getSize() - 1; j++){
 				result += this.getTileString(i, j) + " ";
 			}
-			result += this.getTileString(i, this.getWidth() - 1) + "\n";
+			result += this.getTileString(i, this.getSize() - 1) + "\n";
 		}
-		for(int j = 0; j < this.getWidth() - 1; j++){
-			result += this.getTileString(this.getHeight() - 1, j) + " ";
+		for(int j = 0; j < this.getSize() - 1; j++){
+			result += this.getTileString(this.getSize() - 1, j) + " ";
 		}
-		result += this.getTileString(this.getHeight() - 1, this.getWidth() - 1);
+		result += this.getTileString(this.getSize() - 1, this.getSize() - 1);
 		return result;
 	}
 
 	// return the indexes with the empty position
-	private int[] getEmpty(){
+	public int[] getEmpty(){
 		int[] result = new int[2];
 		result[0] = 0;
 		result[1] = 0;
-		for(int i=0; i<this.getHeight(); i++){
-			for(int j=0; j<this.getWidth(); i++){
+		for(int i=0; i<this.getSize(); i++){
+			for(int j=0; j<this.getSize(); i++){
 				if(this.getTile(i, j) == 0){
 					result[0] = i;
 					result[1] = j;
