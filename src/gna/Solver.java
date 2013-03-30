@@ -2,6 +2,8 @@ package gna;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 public class Solver
 {
@@ -12,6 +14,9 @@ public class Solver
 	public Solver( Board initial )
 	{
 		this.initial = initial;
+		
+		// create a priority queue with the default capacity
+		PriorityQueue<Board> queue = new PriorityQueue<Board>(11, new BoardComparator());
 	}
 
 	// get the initial board
@@ -74,13 +79,31 @@ public class Solver
 	// -1 if no solution
 	public int moves()
 	{
-		return 0;
+		if(!this.isSolvable())
+			return -1;
+		// TODO
+		return -1;
 	}
 
 	// return an Iterable of board positions in solution
 	public Iterable<Board> solution()
 	{
+		// TODO
 		return null;
+	}
+	
+	class BoardComparator implements Comparator<Board>{
+
+		@Override
+		public int compare(Board first, Board second) {
+			
+			int firstManhattan = first.manhattan();
+			int secondManhattan = second.manhattan();
+			
+			return Integer.compare(firstManhattan, secondManhattan);
+			
+		}
+		
 	}
 }
 
