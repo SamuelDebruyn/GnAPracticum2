@@ -43,11 +43,7 @@ public class Solver
 			// A*
 			while(aStarQueue.peek().hamming() != 0){
 
-				Board previous = null;
-				if(solution.size() > 0)
-					previous = solution.get(solution.size() - 1);
 				Board minimum = aStarQueue.poll();
-				solution.add(minimum);
 
 				// TODO: debug
 				int hamming = minimum.hamming();
@@ -55,7 +51,13 @@ public class Solver
 				int moves = minimum.getMoves();
 
 				for(Board neighbor : minimum.neighbors()){
-					if(!neighbor.equals(previous)){
+					boolean isDuplicate = false;
+					for(Board inQueue: aStarQueue){
+						if(inQueue.equals(neighbor))
+							isDuplicate = true;
+					}
+					
+					if(!isDuplicate){
 						neighbor.setMoves(minimum.getMoves() + 1);
 						neighbor.setPrevious(minimum);
 						aStarQueue.add(neighbor);
