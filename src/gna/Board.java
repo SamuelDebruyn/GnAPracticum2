@@ -103,7 +103,7 @@ public class Board implements Cloneable
 
 		int checker = 1;
 		for(int i = 0; i < this.getSize(); i++){
-			for(int j = 0; j < this.getSize(); i++){
+			for(int j = 0; j < this.getSize(); j++){
 				if(checker == number){
 					result[0] = i;
 					result[1] = j;
