@@ -129,8 +129,9 @@ public class Board implements Cloneable
 	public Iterable<Board> neighbors()
 	{
 		ArrayList<Board> neighborList = new ArrayList<Board>();
-		int[] emptyIndexes = this.getEmpty();
-		int[][] modify = this.getTiles().clone();
+		Board copy = this.clone();
+		int[] emptyIndexes = copy.getEmpty();
+		int[][] modify = copy.getTiles();
 
 		// keep trying and catching until we tried the 4 sides
 		for(int i = 0; i < 4; i++){
@@ -159,10 +160,11 @@ public class Board implements Cloneable
 					secondIndex = emptyIndexes[1];
 					break;
 				}
-				int nextPosition = this.getTile(firstIndex, secondIndex);
+				int nextPosition = copy.getTile(firstIndex, secondIndex);
 				modify[emptyIndexes[0]][emptyIndexes[1]] = nextPosition;
 				modify[firstIndex][secondIndex] = 0;
-				neighborList.add(new Board(modify));
+				// modify is a shallow copy
+				neighborList.add(copy);
 			}catch(ArrayIndexOutOfBoundsException e){
 				// the empty position is in a corner or on one of the 4 sides
 			}

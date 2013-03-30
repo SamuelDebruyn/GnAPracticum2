@@ -69,11 +69,14 @@ public class Solver
 	public boolean isSolvable()
 	{
 		
-		int[] emptyCoords = this.getInitial().getEmpty();
+		// we don't want to modify the initial board, using a clone instead
+		Board copy = this.getInitial().clone();
+		int[] emptyCoords = copy.getEmpty();
 		int x = emptyCoords[1];
 		int y = emptyCoords[0];
-		int size = this.getInitial().getSize();
-		int[][] tiles = this.getInitial().getTiles().clone();
+		int size = copy.getSize();
+		// shallow copy
+		int[][] tiles = copy.getTiles();
 
 		// first move the empty tile to its correct position
 		while(x != size -1){
