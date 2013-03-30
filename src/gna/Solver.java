@@ -2,6 +2,7 @@ package gna;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
@@ -15,9 +16,10 @@ public class Solver
 	public Solver( Board initial )
 	{
 		this.initial = initial;
+		// use manhattan by default
 		this.solve(new BoardManhattanComparator());
 	}
-	
+
 	// define if you want to use manhattan or hamming
 	public Solver(Board initial, boolean useHammingInstead){
 		this.initial = initial;
@@ -29,37 +31,55 @@ public class Solver
 
 	// solve the board with the given comparator
 	private void solve(Comparator<Board> comp){
-		
+
 		if(this.isSolvable()){
-			
+
 			// create a priority queue with the default capacity
 			PriorityQueue<Board> aStarQueue = new PriorityQueue<Board>(11, comp);
-			
+
 			// add the initial board
 			aStarQueue.add(initial);
-			
+
 			// A*
 			while(aStarQueue.peek().hamming() != 0){
-				
+
 				Board previous = null;
 				if(solution.size() > 0)
 					previous = solution.get(solution.size() - 1);
 				Board minimum = aStarQueue.poll();
 				solution.add(minimum);
+
+				// TODO: debug
+				int hamming = minimum.hamming();
+				int manhattan = minimum.manhattan();
+				int moves = minimum.getMoves();
+
 				for(Board neighbor : minimum.neighbors()){
 					if(!neighbor.equals(previous)){
+						neighbor.setMoves(minimum.getMoves() + 1);
+						neighbor.setPrevious(minimum);
 						aStarQueue.add(neighbor);
 					}
 				}
-				
+
 			}
-			
+
 			// now the first element in the queue is the solution
-			solution.add(aStarQueue.poll());
-			
+			Board solved = aStarQueue.poll();
+			solution.add(solved);
+
+			Board previous = solved.getPrevious();
+
+			while(previous != null){
+				solution.add(previous);
+				previous = previous.getPrevious();
+			}
+
+			Collections.reverse(solution);
+
 		}
 	}
-	
+
 	// get the initial board
 	public Board getInitial() {
 		return initial;
@@ -73,7 +93,7 @@ public class Solver
 	// is the initial board solvable?
 	public boolean isSolvable()
 	{
-		
+
 		// we don't want to modify the initial board, using a copy instead
 		Board copy = new Board(this.getInitial());
 		int[] emptyCoords = copy.getEmpty();
@@ -110,14 +130,14 @@ public class Solver
 		// neutral element
 		BigInteger product1 = BigInteger.valueOf(1);
 		BigInteger product2 = BigInteger.valueOf(1);
-		
+
 		for(int i = 0; i < permutation.size() - 1; i++){
 			for(int j = permutation.size() - 1; j > i; j--){
 				product1 = product1.multiply(BigInteger.valueOf(permutation.get(i) - permutation.get(j)));
 				product2 = product2.multiply(BigInteger.valueOf(j - i));
 			}
 		}
-		
+
 		BigInteger result = product1.divide(product2);
 		int sign = result.signum();
 
@@ -136,23 +156,23 @@ public class Solver
 	{
 		return this.getSolution();
 	}
-	
+
 	private class BoardManhattanComparator implements Comparator<Board>{
 
 		@Override
 		public int compare(Board first, Board second) {
-			return Integer.compare(first.manhattan(), second.manhattan());
+			return Integer.compare(first.manhattan() + first.getMoves(), second.manhattan() + second.getMoves());
 		}
-		
+
 	}
-	
+
 	private class BoardHammingComparator implements Comparator<Board>{
 
 		@Override
 		public int compare(Board first, Board second) {
-			return Integer.compare(first.hamming(), second.hamming());
+			return Integer.compare(first.hamming() + first.getMoves(), second.hamming() + second.getMoves());
 		}
-		
+
 	}
 }
 

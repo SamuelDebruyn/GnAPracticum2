@@ -7,17 +7,21 @@ public class Board implements Cloneable
 
 	private final int[][] tiles;
 	private final int size;
+	private int moves;
+	private Board previous;
 
 	// construct a board from an N-by-N array of tiles
 	public Board( int[][] tiles )
 	{
 		this.tiles = tiles;
 		this.size = tiles.length;
+		this.setMoves(0);
 	}
-	
+
 	// copy constructor
 	public Board(Board old){
 		this.size = old.getSize();
+		this.setMoves(old.getMoves());
 		int[][] oldTiles = old.getTiles();
 		this.tiles = new int[this.getSize()][this.getSize()];
 		for(int i = 0; i < old.getSize(); i++){
@@ -37,12 +41,32 @@ public class Board implements Cloneable
 		return size;
 	}
 
+	// get the previous board configuration
+	public Board getPrevious() {
+		return previous;
+	}
+
+	// set the previous board configuration
+	public void setPrevious(Board previous) {
+		this.previous = previous;
+	}
+
+	// returns the number of moves to get to this configuration
+	public int getMoves() {
+		return moves;
+	}
+
+	// sets the number of moves to get to this configuration
+	public void setMoves(int moves) {
+		this.moves = moves;
+	}
+
 	// return the tile with the given indexes (possible ArrayIndexOutOfBoundsException)
 	public int getTile(int i, int j){
 		int[][] tiles = this.getTiles();
 		return tiles[i][j];
 	}
-	
+
 	// return the representation of a tile as a string (possible ArrayIndexOutOfBoundsException)
 	private String getTileString(int i, int j){
 		String result = "";
@@ -118,7 +142,7 @@ public class Board implements Cloneable
 	{
 		if(y == null)
 			return false;
-		
+
 		// we can't use the methods defined in this class if it's not a board
 		Board toCompare = (Board) y;
 
@@ -144,7 +168,7 @@ public class Board implements Cloneable
 		Board copy;
 		int[] emptyIndexes;
 		int[][] modify;
-		
+
 		// keep trying and catching until we tried the 4 sides
 		for(int i = 0; i < 4; i++){
 			try{
