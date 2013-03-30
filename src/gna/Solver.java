@@ -31,7 +31,7 @@ public class Solver
 				
 				Board minimum = aStarQueue.poll();
 				for(Board neighbor : minimum.neighbors()){
-					if(neighbor != minimum.getPrevious()){
+					if(!neighbor.equals(minimum.getPrevious())){
 						neighbor.setPrevious(minimum);
 						aStarQueue.add(neighbor);
 					}
@@ -73,7 +73,7 @@ public class Solver
 		int x = emptyCoords[1];
 		int y = emptyCoords[0];
 		int size = this.getInitial().getSize();
-		int[][] tiles = this.getInitial().getTiles();
+		int[][] tiles = this.getInitial().getTiles().clone();
 
 		// first move the empty tile to its correct position
 		while(x != size -1){

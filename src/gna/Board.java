@@ -2,7 +2,7 @@ package gna;
 
 import java.util.ArrayList;
 
-public class Board
+public class Board implements Cloneable
 {
 
 	private final int[][] tiles;
@@ -41,7 +41,7 @@ public class Board
 		int[][] tiles = this.getTiles();
 		return tiles[i][j];
 	}
-
+	
 	// return the representation of a tile as a string (possible ArrayIndexOutOfBoundsException)
 	private String getTileString(int i, int j){
 		int tile = this.getTile(i, j);
@@ -130,7 +130,7 @@ public class Board
 	{
 		ArrayList<Board> neighborList = new ArrayList<Board>();
 		int[] emptyIndexes = this.getEmpty();
-		int[][] modify = this.getTiles();
+		int[][] modify = this.getTiles().clone();
 
 		// keep trying and catching until we tried the 4 sides
 		for(int i = 0; i < 4; i++){
@@ -173,6 +173,7 @@ public class Board
 	}
 
 	// return a string representation of the board
+	@Override
 	public String toString()
 	{
 		String result = "";
@@ -187,6 +188,19 @@ public class Board
 		}
 		result += this.getTileString(this.getSize() - 1, this.getSize() - 1);
 		return result;
+	}
+	
+	// clone a board (avoiding problems with cloning 2-dimensional arrays)
+	@Override
+	public Board clone(){
+		int[][] oldTiles = this.getTiles();
+		int[][] newTiles = new int[this.getSize()][this.getSize()];
+		for(int i = 0; i < this.getSize(); i++){
+			for(int j = 0; j < this.getSize(); j++){
+				newTiles[i][j] = oldTiles[i][j];
+			}
+		}
+		return new Board(newTiles);
 	}
 
 	// return the indexes with the empty position
