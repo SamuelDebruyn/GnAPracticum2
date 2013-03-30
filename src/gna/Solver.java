@@ -9,16 +9,36 @@ public class Solver
 {
 
 	private final Board initial;
+	private final ArrayList<Board> solution = new ArrayList<Board>();
 
 	// find a solution to the initial board
 	public Solver( Board initial )
 	{
 		this.initial = initial;
 		
-		// create a priority queue with the default capacity
-		PriorityQueue<Board> queue = new PriorityQueue<Board>(11, new BoardComparator());
-		
 		if(this.isSolvable()){
+			
+			// create a priority queue with the default capacity
+			PriorityQueue<Board> aStarQueue = new PriorityQueue<Board>(11, new BoardComparator());
+			
+			// add the initial board
+			aStarQueue.add(initial);
+			
+			// A*
+			while(aStarQueue.peek().manhattan() != 0){
+				
+				Board minimum = aStarQueue.poll();
+				for(Board neighbor : minimum.neighbors()){
+					if(neighbor != minimum.getPrevious()){
+						neighbor.setPrevious(minimum);
+						aStarQueue.add(neighbor);
+					}
+				}
+				
+			}
+			
+			// now the first element in the queue is the solution
+			
 			
 		}
 	}
@@ -26,6 +46,11 @@ public class Solver
 	// get the initial board
 	public Board getInitial() {
 		return initial;
+	}
+
+	// get the solution as an ArrayList
+	public ArrayList<Board> getSolution() {
+		return solution;
 	}
 
 	// is the initial board solvable?
@@ -86,17 +111,13 @@ public class Solver
 		if(!this.isSolvable())
 			return -1;
 
-		ArrayList<Board> list = (ArrayList<Board>) this.solution();
-		return list.size();
+		return this.getSolution().size();
 	}
 
 	// return an Iterable of board positions in solution
 	public Iterable<Board> solution()
 	{
-		// TODO
-		ArrayList<Board> result = new ArrayList<Board>();
-		
-		return result;
+		return this.getSolution();
 	}
 	
 	private class BoardComparator implements Comparator<Board>{
