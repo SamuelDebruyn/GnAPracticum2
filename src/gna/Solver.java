@@ -2,7 +2,6 @@ package gna;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
@@ -29,10 +28,13 @@ public class Solver
 			// A*
 			while(aStarQueue.peek().hamming() != 0){
 				
+				Board previous = null;
+				if(solution.size() > 0)
+					previous = solution.get(solution.size() - 1);
 				Board minimum = aStarQueue.poll();
+				solution.add(minimum);
 				for(Board neighbor : minimum.neighbors()){
-					if(!neighbor.equals(minimum.getPrevious())){
-						neighbor.setPrevious(minimum);
+					if(!neighbor.equals(previous)){
 						aStarQueue.add(neighbor);
 					}
 				}
@@ -40,17 +42,10 @@ public class Solver
 			}
 			
 			// now the first element in the queue is the solution
-			Board solved = aStarQueue.poll();
-			solution.add(solved);
+			solution.add(aStarQueue.poll());
 			
-			Board previous = solved.getPrevious();
-			
-			while(previous != null){
-				solution.add(previous);
-				previous = previous.getPrevious();
-			}
-			
-			Collections.reverse(solution);
+			// we still need to remove the first (initial) board from the solution
+			solution.remove(0);
 			
 		}
 	}

@@ -7,7 +7,6 @@ public class Board implements Cloneable
 
 	private final int[][] tiles;
 	private final int size;
-	private Board previous;
 
 	// construct a board from an N-by-N array of tiles
 	public Board( int[][] tiles )
@@ -26,16 +25,6 @@ public class Board implements Cloneable
 				this.tiles[i][j] = oldTiles[i][j];
 			}
 		}
-	}
-
-	// get the previous board configuration
-	public Board getPrevious() {
-		return previous;
-	}
-
-	// set the previous board configuration
-	public void setPrevious(Board previous) {
-		this.previous = previous;
 	}
 
 	// returns the array with the tiles
