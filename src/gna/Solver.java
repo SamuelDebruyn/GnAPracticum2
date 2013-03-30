@@ -85,8 +85,9 @@ public class Solver
 	{
 		if(!this.isSolvable())
 			return -1;
-		// TODO
-		return -1;
+
+		ArrayList<Board> list = (ArrayList<Board>) this.solution();
+		return list.size();
 	}
 
 	// return an Iterable of board positions in solution
