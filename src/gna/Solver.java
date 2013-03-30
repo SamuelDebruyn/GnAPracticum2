@@ -15,12 +15,25 @@ public class Solver
 	public Solver( Board initial )
 	{
 		this.initial = initial;
+		this.solve(new BoardManhattanComparator());
+	}
+	
+	// define if you want to use manhattan or hamming
+	public Solver(Board initial, boolean useHammingInstead){
+		this.initial = initial;
+		if(useHammingInstead)
+			this.solve(new BoardHammingComparator());
+		else
+			this.solve(new BoardManhattanComparator());
+	}
+
+	// solve the board with the given comparator
+	private void solve(Comparator<Board> comp){
 		
 		if(this.isSolvable()){
 			
 			// create a priority queue with the default capacity
-			// change the comparator to a BoardHammingComparator if you want to use hamming instead of manhattan as the heuristic
-			PriorityQueue<Board> aStarQueue = new PriorityQueue<Board>(11, new BoardManhattanComparator());
+			PriorityQueue<Board> aStarQueue = new PriorityQueue<Board>(11, comp);
 			
 			// add the initial board
 			aStarQueue.add(initial);
@@ -44,12 +57,9 @@ public class Solver
 			// now the first element in the queue is the solution
 			solution.add(aStarQueue.poll());
 			
-			// we still need to remove the first (initial) board from the solution
-			solution.remove(0);
-			
 		}
 	}
-
+	
 	// get the initial board
 	public Board getInitial() {
 		return initial;
@@ -118,10 +128,7 @@ public class Solver
 	// -1 if no solution
 	public int moves()
 	{
-		if(!this.isSolvable())
-			return -1;
-
-		return this.getSolution().size();
+		return this.getSolution().size() - 1;
 	}
 
 	// return an Iterable of board positions in solution

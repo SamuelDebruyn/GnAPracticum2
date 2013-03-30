@@ -45,10 +45,18 @@ public class Board implements Cloneable
 	
 	// return the representation of a tile as a string (possible ArrayIndexOutOfBoundsException)
 	private String getTileString(int i, int j){
+		String result = "";
+		int max = this.getSize() * this.getSize() - 1;
+		int length = String.valueOf(max).length();
 		int tile = this.getTile(i, j);
-		if(tile == 0)
-			return " ";
-		return Integer.toString(tile);
+		if(tile == 0){
+			result+= " ";
+		}else{
+			result+= Integer.toString(tile);
+		}
+		while(result.length() < length)
+			result = " " + result;
+		return result;
 	}
 
 	// return number of blocks out of place
