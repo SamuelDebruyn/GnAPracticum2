@@ -17,6 +17,10 @@ public class Solver
 		
 		// create a priority queue with the default capacity
 		PriorityQueue<Board> queue = new PriorityQueue<Board>(11, new BoardComparator());
+		
+		if(this.isSolvable()){
+			
+		}
 	}
 
 	// get the initial board
@@ -89,10 +93,12 @@ public class Solver
 	public Iterable<Board> solution()
 	{
 		// TODO
-		return null;
+		ArrayList<Board> result = new ArrayList<Board>();
+		
+		return result;
 	}
 	
-	class BoardComparator implements Comparator<Board>{
+	private class BoardComparator implements Comparator<Board>{
 
 		@Override
 		public int compare(Board first, Board second) {
