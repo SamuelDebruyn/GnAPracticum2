@@ -2,6 +2,7 @@ package gna;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
@@ -38,7 +39,17 @@ public class Solver
 			}
 			
 			// now the first element in the queue is the solution
+			Board solved = aStarQueue.poll();
+			solution.add(solved);
 			
+			Board previous = solved.getPrevious();
+			
+			while(previous != null){
+				solution.add(previous);
+				previous = previous.getPrevious();
+			}
+			
+			Collections.reverse(solution);
 			
 		}
 	}
