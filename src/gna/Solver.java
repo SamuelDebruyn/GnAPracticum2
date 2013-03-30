@@ -20,7 +20,8 @@ public class Solver
 		if(this.isSolvable()){
 			
 			// create a priority queue with the default capacity
-			PriorityQueue<Board> aStarQueue = new PriorityQueue<Board>(11, new BoardComparator());
+			// change the comparator to a BoardHammingComparator if you want to use hamming instead of manhattan as the heuristic
+			PriorityQueue<Board> aStarQueue = new PriorityQueue<Board>(11, new BoardManhattanComparator());
 			
 			// add the initial board
 			aStarQueue.add(initial);
@@ -131,16 +132,20 @@ public class Solver
 		return this.getSolution();
 	}
 	
-	private class BoardComparator implements Comparator<Board>{
+	private class BoardManhattanComparator implements Comparator<Board>{
 
 		@Override
 		public int compare(Board first, Board second) {
-			
-			int firstManhattan = first.manhattan();
-			int secondManhattan = second.manhattan();
-			
-			return Integer.compare(firstManhattan, secondManhattan);
-			
+			return Integer.compare(first.manhattan(), second.manhattan());
+		}
+		
+	}
+	
+	private class BoardHammingComparator implements Comparator<Board>{
+
+		@Override
+		public int compare(Board first, Board second) {
+			return Integer.compare(first.hamming(), second.hamming());
 		}
 		
 	}
