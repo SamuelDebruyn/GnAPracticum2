@@ -129,13 +129,16 @@ public class Board implements Cloneable
 	public Iterable<Board> neighbors()
 	{
 		ArrayList<Board> neighborList = new ArrayList<Board>();
-		Board copy = this.clone();
-		int[] emptyIndexes = copy.getEmpty();
-		int[][] modify = copy.getTiles();
-
+		Board copy;
+		int[] emptyIndexes;
+		int[][] modify;
+		
 		// keep trying and catching until we tried the 4 sides
 		for(int i = 0; i < 4; i++){
 			try{
+				copy = this.clone();
+				emptyIndexes = copy.getEmpty();
+				modify = copy.getTiles();
 				int firstIndex = 0;
 				int secondIndex = 0;
 				switch(i){

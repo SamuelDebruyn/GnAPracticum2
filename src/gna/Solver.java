@@ -27,7 +27,7 @@ public class Solver
 			aStarQueue.add(initial);
 			
 			// A*
-			while(aStarQueue.peek().manhattan() != 0){
+			while(aStarQueue.peek().hamming() != 0){
 				
 				Board minimum = aStarQueue.poll();
 				for(Board neighbor : minimum.neighbors()){
