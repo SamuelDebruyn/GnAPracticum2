@@ -52,11 +52,15 @@ public class Solver
 
 				for(Board neighbor : minimum.neighbors()){
 					boolean isDuplicate = false;
-					for(Board inQueue: aStarQueue){
-						if(inQueue.equals(neighbor))
-							isDuplicate = true;
+					if(neighbor.equals(minimum.getPrevious())){
+						isDuplicate = true;
+					}else{
+						for(Board inQueue: aStarQueue){
+							if(inQueue.equals(neighbor))
+								isDuplicate = true;
+						}
 					}
-					
+
 					if(!isDuplicate){
 						neighbor.setMoves(minimum.getMoves() + 1);
 						neighbor.setPrevious(minimum);
@@ -135,7 +139,7 @@ public class Solver
 
 		for(int i = 0; i < permutation.size() - 1; i++){
 			for(int j = permutation.size() - 1; j > i; j--){
-				product1 = product1.multiply(BigInteger.valueOf(permutation.get(i) - permutation.get(j)));
+				product1 = product1.multiply(BigInteger.valueOf(permutation.get(j) - permutation.get(i)));
 				product2 = product2.multiply(BigInteger.valueOf(j - i));
 			}
 		}
