@@ -15,6 +15,18 @@ public class Board implements Cloneable
 		this.tiles = tiles;
 		this.size = tiles.length;
 	}
+	
+	// copy constructor
+	public Board(Board old){
+		this.size = old.getSize();
+		int[][] oldTiles = old.getTiles();
+		this.tiles = new int[this.getSize()][this.getSize()];
+		for(int i = 0; i < old.getSize(); i++){
+			for(int j = 0; j < old.getSize(); j++){
+				this.tiles[i][j] = oldTiles[i][j];
+			}
+		}
+	}
 
 	// get the previous board configuration
 	public Board getPrevious() {
@@ -107,6 +119,9 @@ public class Board implements Cloneable
 	// does this board position equal y
 	public boolean equals(Object y)
 	{
+		if(y == null)
+			return false;
+		
 		// we can't use the methods defined in this class if it's not a board
 		Board toCompare = (Board) y;
 
@@ -136,7 +151,7 @@ public class Board implements Cloneable
 		// keep trying and catching until we tried the 4 sides
 		for(int i = 0; i < 4; i++){
 			try{
-				copy = this.clone();
+				copy = new Board(this);
 				emptyIndexes = copy.getEmpty();
 				modify = copy.getTiles();
 				int firstIndex = 0;
@@ -193,19 +208,6 @@ public class Board implements Cloneable
 		}
 		result += this.getTileString(this.getSize() - 1, this.getSize() - 1);
 		return result;
-	}
-	
-	// clone a board (avoiding problems with cloning 2-dimensional arrays)
-	@Override
-	public Board clone(){
-		int[][] oldTiles = this.getTiles();
-		int[][] newTiles = new int[this.getSize()][this.getSize()];
-		for(int i = 0; i < this.getSize(); i++){
-			for(int j = 0; j < this.getSize(); j++){
-				newTiles[i][j] = oldTiles[i][j];
-			}
-		}
-		return new Board(newTiles);
 	}
 
 	// return the indexes with the empty position

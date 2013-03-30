@@ -69,8 +69,8 @@ public class Solver
 	public boolean isSolvable()
 	{
 		
-		// we don't want to modify the initial board, using a clone instead
-		Board copy = this.getInitial().clone();
+		// we don't want to modify the initial board, using a copy instead
+		Board copy = new Board(this.getInitial());
 		int[] emptyCoords = copy.getEmpty();
 		int x = emptyCoords[1];
 		int y = emptyCoords[0];
