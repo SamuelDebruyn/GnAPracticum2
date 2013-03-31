@@ -118,20 +118,19 @@ public class Board implements Cloneable
 		return manhattanSum;
 	}
 
-	// return indexes of the position where this number should be in the board
+	// return indexes of the position where this number should be in the board (number should be between 0 and N^2)
 	private int[] getDestination(int number){
+		
 		int[] result = new int[2];
-
-		int checker = 1;
-		for(int i = 0; i < this.getSize(); i++){
-			for(int j = 0; j < this.getSize(); j++){
-				if(checker == number){
-					result[0] = i;
-					result[1] = j;
-					return result;
-				}
-				checker++;
-			}
+		
+		result[0] = number / this.getSize();
+		result[1] = number % this.getSize();
+		
+		if(result[1] == 0){
+			result[0]--;
+			result[1] = this.getSize() - 1;
+		}else{
+			result[1]--;
 		}
 
 		return result;
