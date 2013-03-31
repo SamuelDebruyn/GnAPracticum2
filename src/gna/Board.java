@@ -2,7 +2,7 @@ package gna;
 
 import java.util.ArrayList;
 
-public class Board implements Cloneable
+public class Board
 {
 
 	private final int[][] tiles;
