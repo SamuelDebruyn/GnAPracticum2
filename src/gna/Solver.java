@@ -45,23 +45,8 @@ public class Solver
 
 				Board minimum = aStarQueue.poll();
 
-				// TODO: debug
-				int hamming = minimum.hamming();
-				int manhattan = minimum.manhattan();
-				int moves = minimum.getMoves();
-
 				for(Board neighbor : minimum.neighbors()){
-					boolean isDuplicate = false;
-					if(neighbor.equals(minimum.getPrevious())){
-						isDuplicate = true;
-					}else{
-						for(Board inQueue: aStarQueue){
-							if(inQueue.equals(neighbor))
-								isDuplicate = true;
-						}
-					}
-
-					if(!isDuplicate){
+					if(!neighbor.equals(minimum.getPrevious())){
 						neighbor.setMoves(minimum.getMoves() + 1);
 						neighbor.setPrevious(minimum);
 						aStarQueue.add(neighbor);

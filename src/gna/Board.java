@@ -167,6 +167,7 @@ public class Board implements Cloneable
 		Board copy;
 		int[] emptyIndexes;
 		int[][] modify;
+		int firstIndex, secondIndex, nextPosition;
 
 		// keep trying and catching until we tried the 4 sides
 		for(int i = 0; i < 4; i++){
@@ -174,8 +175,8 @@ public class Board implements Cloneable
 				copy = new Board(this);
 				emptyIndexes = copy.getEmpty();
 				modify = copy.getTiles();
-				int firstIndex = 0;
-				int secondIndex = 0;
+				firstIndex = 0;
+				secondIndex = 0;
 				switch(i){
 				case 0:
 					// move left to empty
@@ -198,7 +199,7 @@ public class Board implements Cloneable
 					secondIndex = emptyIndexes[1];
 					break;
 				}
-				int nextPosition = copy.getTile(firstIndex, secondIndex);
+				nextPosition = copy.getTile(firstIndex, secondIndex);
 				modify[emptyIndexes[0]][emptyIndexes[1]] = nextPosition;
 				modify[firstIndex][secondIndex] = 0;
 				// modify is a shallow copy
