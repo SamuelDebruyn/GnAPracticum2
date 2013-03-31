@@ -15,16 +15,16 @@ public class Measure {
 		Board initial = new Board(tiles);
 		long start, end, duration;
 		
-		start = System.nanoTime();
+		start = System.currentTimeMillis();
 		Solver solverManhattan = new Solver(initial, false);
-		end = System.nanoTime();
+		end = System.currentTimeMillis();
 		duration = (end - start) / 1000;
-		System.out.println("Manhattan:\n\nmoves: " + solverManhattan.moves() + "\nduration: " + duration + "µs\n\n");
-		start = System.nanoTime();
+		System.out.println("Manhattan:\n\nmoves: " + solverManhattan.moves() + "\nduration: " + duration + "s\n\n");
+		start = System.currentTimeMillis();
 		Solver solverHamming = new Solver(initial, true);
-		end = System.nanoTime();
+		end = System.currentTimeMillis();
 		duration = (end - start) / 1000;
-		System.out.println("Hamming:\n\nmoves: " + solverHamming.moves() + "\nduration: " + duration + "µs\n\n");
+		System.out.println("Hamming:\n\nmoves: " + solverHamming.moves() + "\nduration: " + duration + "s");
 		
 		
 	}
