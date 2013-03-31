@@ -90,7 +90,6 @@ public class Board
 		int shouldBe = 1;
 		for(int i = 0; i < this.getSize(); i++){
 			for(int j = 0; j < this.getSize(); j++){
-				// last tile should be empty tile
 				int tile = this.getTile(i, j);
 				if(tile != shouldBe && tile != 0)
 					outOfPlace++;
