@@ -1,6 +1,7 @@
 <project name="puzzle" basedir="." default="main">
 
     <property name="src.dir"     value="src"/>
+    <property name="report.dir"  value="report"/>
     <property name="build.dir"   value="build"/>
     <property name="classes.dir" value="${build.dir}/classes"/>
     <property name="jar.dir"     value="${build.dir}/jar"/>
@@ -50,11 +51,20 @@
       <fail if="junit.failure" message="Unit test(s) failed."/>
     </target>
     
-    <target name="release" depends="compile">
+    <target name="check-pdf-exist">
+        <pathconvert property="pdf.file.found" setonempty="false" pathsep=" ">
+            <path>
+                <fileset dir="${report.dir}" includes="*.pdf" />
+            </path>
+        </pathconvert>
+    </target>
+   
+    <target name="release" depends="compile, check-pdf-exist">
       <zip destfile="${build.dir}/firstname_lastname.zip">
         <zipfileset dir="${src.dir}" includes="**/*.java"/>
-        <zipfileset dir="." includes="report.pdf"/>
+        <zipfileset dir="${report.dir}" includes="*.pdf"/>
       </zip>
+      <fail unless="pdf.file.found" message="Report PDF not found. Please place your report in the 'report/' directory."/>
     </target>
 
     <target name="main" depends="clean,run"/>
