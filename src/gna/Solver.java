@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.PriorityQueue;
 
 public class Solver
@@ -36,6 +37,9 @@ public class Solver
 
 			// create a priority queue with the default capacity
 			PriorityQueue<Board> aStarQueue = new PriorityQueue<Board>(11, comp);
+			
+			// create a hashSet as closed list
+			HashSet<Board> aStarClosed = new HashSet<Board>();
 
 			// add the initial board
 			aStarQueue.add(initial);
@@ -46,12 +50,14 @@ public class Solver
 				Board minimum = aStarQueue.poll();
 
 				for(Board neighbor : minimum.neighbors()){
-					if(!neighbor.equals(minimum.getPrevious())){
+					if(!(neighbor.equals(minimum.getPrevious()) || aStarClosed.contains(neighbor))){
 						neighbor.setMoves(minimum.getMoves() + 1);
 						neighbor.setPrevious(minimum);
 						aStarQueue.add(neighbor);
 					}
 				}
+				
+				aStarClosed.add(minimum);
 
 			}
 
