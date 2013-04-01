@@ -158,7 +158,13 @@ public class Board
 	// does this board position equal y
 	public boolean equals(Object y)
 	{
+		if(this == y)
+			return true;
+		
 		if(y == null)
+			return false;
+		
+		if(this.getClass() != y.getClass())
 			return false;
 
 		// we can't use the methods defined in this class if it's not a board
@@ -167,16 +173,8 @@ public class Board
 		// first check if it has the same dimensions
 		if(this.getSize() != toCompare.getSize())
 			return false;
-
-		// now compare every tile
-		for(int i = 0; i < this.getSize(); i++){
-			for(int j = 0; j < this.getSize(); j++){
-				if(this.getTile(i, j) != toCompare.getTile(i, j))
-					return false;
-			}
-		}
-
-		return true;
+		
+		return Arrays.deepEquals(this.getTiles(), toCompare.getTiles());
 	}
 
 	// return an Iterable of all neighboring board positions
