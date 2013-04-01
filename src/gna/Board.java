@@ -1,6 +1,7 @@
 package gna;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Board
 {
@@ -9,6 +10,7 @@ public class Board
 	private final int size;
 	private int moves;
 	private Board previous;
+	private int cachedHashcode = 0;
 
 	// construct a board from an N-by-N array of tiles
 	public Board( int[][] tiles )
@@ -59,6 +61,24 @@ public class Board
 	// sets the number of moves to get to this configuration
 	public void setMoves(int moves) {
 		this.moves = moves;
+	}
+	
+	// get the cached hashcode
+	public int getCachedHashcode() {
+		return cachedHashcode;
+	}
+
+	// set the cached hashcode
+	public void setCachedHashcode(int cachedHashcode) {
+		this.cachedHashcode = cachedHashcode;
+	}
+
+	@Override
+	public int hashCode() {
+		if(this.getCachedHashcode() == 0){
+			this.setCachedHashcode(Arrays.deepHashCode(this.getTiles()));
+		}
+		return this.getCachedHashcode();
 	}
 
 	// return the tile with the given indexes (possible ArrayIndexOutOfBoundsException)
